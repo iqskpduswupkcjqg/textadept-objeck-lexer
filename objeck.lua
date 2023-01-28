@@ -30,10 +30,14 @@ lex:add_rule('type', token(lexer.TYPE, word_match{
 -- Identifiers.
 lex:add_rule('identifier', token(lexer.IDENTIFIER, lexer.word))
 
+-- Class variables
+local class_var = '@' * lexer.word
+lex:add_rule('variable', lex:tag(lexer.VARIABLE, class_var))
+
 -- Comments.
-local line_comment = lexer.to_eol('//', true)
-local block_comment = lexer.range('/*', '*/')
-lex:add_rule('comment', token(lexer.COMMENT, line_comment + block_comment))
+local line_comment = lexer.to_eol('#', true)
+local block_comment = lexer.range('#~', '~#')
+lex:add_rule('comment', token(lexer.COMMENT, block_comment + line_comment))
 
 -- Strings.
 local sq_str = lexer.range("'", true)
@@ -42,23 +46,15 @@ local ml_str = P('@')^-1 * lexer.range('"', false, false)
 lex:add_rule('string', token(lexer.STRING, sq_str + dq_str + ml_str))
 
 -- Numbers.
-lex:add_rule('number', token(lexer.NUMBER, lexer.number * S('lLdDfFmM')^-1))
-
--- Preprocessor.
-lex:add_rule('preprocessor', token(lexer.PREPROCESSOR, '#' * S('\t ')^0 *
-  word_match('define elif else endif error if line undef warning region endregion')))
+lex:add_rule('number', token(lexer.NUMBER, lexer.number)
 
 -- Operators.
 lex:add_rule('operator', token(lexer.OPERATOR, S('~!.,:;+-*/<>=\\^|&%?()[]{}')))
 
 -- Fold points.
-lex:add_fold_point(lexer.PREPROCESSOR, 'if', 'endif')
-lex:add_fold_point(lexer.PREPROCESSOR, 'ifdef', 'endif')
-lex:add_fold_point(lexer.PREPROCESSOR, 'ifndef', 'endif')
-lex:add_fold_point(lexer.PREPROCESSOR, 'region', 'endregion')
 lex:add_fold_point(lexer.OPERATOR, '{', '}')
-lex:add_fold_point(lexer.COMMENT, '/*', '*/')
+lex:add_fold_point(lexer.COMMENT, '#~', '~#')
 
-lexer.property['scintillua.comment'] = '//'
+lexer.property['scintillua.comment'] = '#'
 
 return lex
