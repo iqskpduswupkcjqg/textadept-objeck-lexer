@@ -42,8 +42,8 @@ lex:add_rule('comment', token(lexer.COMMENT, block_comment + line_comment))
 -- Strings.
 local sq_str = lexer.range("'", true)
 local dq_str = lexer.range('"', true)
-local ml_str = P('@')^-1 * lexer.range('"', false, false)
-lex:add_rule('string', token(lexer.STRING, sq_str + dq_str + ml_str))
+local ml_str = lexer.range('"', false, false)
+lex:add_rule('string', token(lexer.STRING, sq_str + ml_str + dq_str))
 
 -- Numbers.
 lex:add_rule('number', token(lexer.NUMBER, lexer.number))
