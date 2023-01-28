@@ -46,7 +46,7 @@ local ml_str = P('@')^-1 * lexer.range('"', false, false)
 lex:add_rule('string', token(lexer.STRING, sq_str + dq_str + ml_str))
 
 -- Numbers.
-lex:add_rule('number', token(lexer.NUMBER, lexer.number)
+lex:add_rule('number', token(lexer.NUMBER, lexer.number))
 
 -- Operators.
 lex:add_rule('operator', token(lexer.OPERATOR, S('~!.,:;+-*/<>=\\^|&%?()[]{}')))
