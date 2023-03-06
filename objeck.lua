@@ -21,10 +21,10 @@ lex:add_rule('keyword', token(lexer.KEYWORD, word_match{
 
 -- Types.
 lex:add_rule('type', token(lexer.TYPE, word_match{
-  'Nil', 'Byte', 'ByteHolder', 'Int', 'IntHolder', 'Float', 'FloatHolder', 'Char', 'CharHolder',
-  'Bool', 'BoolHolder', 'String', 'BaseArrayHolder', 'BoolArrayHolder', 'ByteArrayHolder',
-  'CharArrayHolder', 'FloatArrayHolder', 'IntArrayHolder', 'StringArrayHolder',
-  'Func2Holder', 'Func3Holder', 'Func4Holder', 'FuncHolder'
+  'Nil', 'Byte', 'ByteRef', 'Int', 'IntRef', 'Float', 'FloatRef', 'Char', 'CharRef',
+  'Bool', 'BoolRef', 'String', 'BaseArrayRef', 'BoolArrayRef', 'ByteArrayRef',
+  'CharArrayRef', 'FloatArrayRef', 'IntArrayRef', 'StringArrayRef',
+  'Func2Ref', 'Func3Ref', 'Func4Ref', 'FuncRef'
 }))
 
 -- Identifiers.
